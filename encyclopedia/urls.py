@@ -9,5 +9,5 @@ from . import views
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("css", views.Show_Entry, name="css")
+    path("<str:title>", views.Show_Entry, name="title")
 ]

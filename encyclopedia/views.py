@@ -9,7 +9,10 @@ def index(request):
         "entries": util.list_entries()
     })
 
-def Show_Entry(request):
+def Show_Entry(request,title):
+
+    article = markdown2.markdown(util.get_entry(title))
+
     return render(request,"encyclopedia/Show_Entry.html",context={
-        "article": markdown2.markdown(util.get_entry('CSS'))
+        "article": article
     })
