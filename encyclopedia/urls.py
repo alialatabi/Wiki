@@ -10,5 +10,6 @@ from . import views
 urlpatterns = [
     path("", views.index, name="index"),
     path("<str:title>", views.Show_Entry, name="title"),
-    path("Add/",views.add_arti,name="Add")
+    path("Add/",views.add_arti,name="add"),
+    path("Random/", views.random_arti,name="random")
 ]

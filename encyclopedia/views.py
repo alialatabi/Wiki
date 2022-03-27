@@ -1,3 +1,4 @@
+import random
 from turtle import tilt
 from django.shortcuts import render
 import markdown2
@@ -9,16 +10,25 @@ def index(request):
         "entries": util.list_entries()
     })
 
-def Show_Entry(request,title):
 
+def Show_Entry(request,title):
     article = markdown2.markdown(util.get_entry(title))
 
     return render(request,"encyclopedia/Show_Entry.html",context={
         "article": article
     })
 
-def add_arti(request):
 
+def add_arti(request):
         return render(request,"encyclopedia/Add_arti.html",context={
             'name':"name"
+    })
+
+
+def random_arti(request):
+    ra = random.choice(util.list_entries())
+    random_article = markdown2.markdown(util.get_entry(ra))
+
+    return render(request,"encyclopedia/random.html",context={
+        "random_article": random_article
     })
