@@ -5,11 +5,11 @@ from . import util
 
 
 def index(request):
-    return render(request, "encyclopedia/index.html", {
+    return render(request, "encyclopedia/index.html", context={
         "entries": util.list_entries()
     })
 
 def Show_Entry(request):
-    return render(request,"encyclopedia/Show_Entry.html",{
+    return render(request,"encyclopedia/Show_Entry.html",context={
         "article": markdown2.markdown(util.get_entry('CSS'))
     })
