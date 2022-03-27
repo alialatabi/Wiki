@@ -9,5 +9,6 @@ from . import views
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("<str:title>", views.Show_Entry, name="title")
+    path("<str:title>", views.Show_Entry, name="title"),
+    path("Add/",views.add_arti,name="Add")
 ]

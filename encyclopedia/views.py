@@ -16,3 +16,9 @@ def Show_Entry(request,title):
     return render(request,"encyclopedia/Show_Entry.html",context={
         "article": article
     })
+
+def add_arti(request):
+
+        return render(request,"encyclopedia/Add_arti.html",context={
+            'name':"name"
+    })
