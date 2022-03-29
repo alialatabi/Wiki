@@ -8,10 +8,14 @@
 
 <form action="{% url 'add'  %}" method="POST"  >
     {% csrf_token %}
-
-    {{add}}
-
+    {% if e_check %}
+        <h3 style='color: red;'>Article Alredy Exsites</h3>
+        {{add}}
+        
+    {% else %}
+        {{add}}
+    {% endif %}
     <input type="submit">
-
 </form>
+
 {% endblock %}

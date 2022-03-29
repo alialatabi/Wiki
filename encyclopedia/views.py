@@ -5,15 +5,17 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse
 import markdown2
-
+from django.contrib import messages
 from encyclopedia.forms import NewArticleForm
 from . import util
 from encyclopedia.forms import NewArticleForm
 
-def index(request):
-    q = request.GET.get('q')
 
+
+
+def index(request):
     entries = util.list_entries()
+    q = request.GET.get('q')
     search = False;
     t_list=[]
     if q:
@@ -45,9 +47,8 @@ def Show_Entry(request,title):
         return render(request,"encyclopedia/not_found.html")
 
 
-
-
 def add_arti(request):
+    entries = util.list_entries()
     if request.method == "GET":
         return render(request,"encyclopedia/Add_arti.html",context={
             'add':NewArticleForm(),
@@ -58,11 +59,18 @@ def add_arti(request):
         if arti.is_valid():
             title = arti.cleaned_data["title"]
             content = arti.cleaned_data["content"]
-            util.save_entry(title,content)
-            return HttpResponseRedirect(reverse("index"))
+            if title in entries:
+                return render(request,"encyclopedia/Add_arti.html",context={
+                    "e_check": True
+                    })
+            else:
+                util.save_entry(title,content)
+                return HttpResponseRedirect(reverse("index"))
+
 
 def random_arti(request):
-    ra = random.choice(util.list_entries())
+    entries = util.list_entries()
+    ra = random.choice(entries)
     random_article = markdown2.markdown(util.get_entry(ra))
 
     return render(request,"encyclopedia/random.html",context={
