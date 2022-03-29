@@ -24,6 +24,7 @@ def index(request):
             elif q.lower() in entry.lower():
                 t_list.append(entry)
                 entries = t_list
+
     return render(request, "encyclopedia/index.html", context={
         "entries": entries,
     })
@@ -37,7 +38,7 @@ def Show_Entry(request,title):
                 "article": article
             })
     else:
-        return redirect('/not_found/')
+        return render(request,"encyclopedia/not_found.html")
 
 
 
@@ -57,3 +58,4 @@ def random_arti(request):
     return render(request,"encyclopedia/random.html",context={
         "random_article": random_article
     })
+
