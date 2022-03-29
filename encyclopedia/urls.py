@@ -8,7 +8,7 @@ from . import views
  #               for filename in filenames if filename.endswith(".md")))
 
 urlpatterns = [
-    path("<str:title>", views.Show_Entry, name="title"),
+    path("wiki/<str:title>", views.Show_Entry, name="title"),
     path("Add/",views.add_arti,name="add"),
     path("Random/", views.random_arti,name="random"),
     path("", views.index, name="index"),

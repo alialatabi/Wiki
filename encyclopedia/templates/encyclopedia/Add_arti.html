@@ -6,5 +6,12 @@
 
 {% block body %}
 
-Add
+<form action="{% url 'add'  %}" method="POST"  >
+    {% csrf_token %}
+
+    {{add}}
+
+    <input id = "createpage" type="submit">
+
+</form>
 {% endblock %}
