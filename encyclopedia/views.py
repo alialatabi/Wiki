@@ -1,12 +1,14 @@
 import random
 from turtle import tilt
 from django import forms
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
+from django.urls import reverse
 import markdown2
 
-from encyclopedia.forms import NewPageForm
+from encyclopedia.forms import NewArticleForm
 from . import util
-
+from encyclopedia.forms import NewArticleForm
 
 def index(request):
     q = request.GET.get('q')
@@ -47,11 +49,17 @@ def Show_Entry(request,title):
 
 def add_arti(request):
     if request.method == "GET":
-        add_article_form = forms.NewPageForm()
         return render(request,"encyclopedia/Add_arti.html",context={
-            'add':add_article_form,
+            'add':NewArticleForm(),
         })
-
+        
+    if request.method == "POST":
+        arti = NewArticleForm(request.POST)
+        if arti.is_valid():
+            title = arti.cleaned_data["title"]
+            content = arti.cleaned_data["content"]
+            util.save_entry(title,content)
+            return HttpResponseRedirect(reverse("index"))
 
 def random_arti(request):
     ra = random.choice(util.list_entries())

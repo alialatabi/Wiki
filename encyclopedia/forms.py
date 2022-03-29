@@ -1,7 +1,7 @@
 from django import forms
 
 
-class NewPageForm(forms.Form):
+class NewArticleForm(forms.Form):
     title = forms.CharField(label="Title",
     required = True,
     widget= forms.TextInput(attrs={'placeholder':'Enter Title','style':'bottom:1rem'}))
