@@ -12,9 +12,10 @@ def index(request):
     q = request.GET.get('q')
 
     entries = util.list_entries()
-
+    search = False;
     t_list=[]
     if q:
+        search = True
         for entry in entries:
             if q == entry:
                 article = markdown2.markdown(util.get_entry(entry))
@@ -27,6 +28,7 @@ def index(request):
 
     return render(request, "encyclopedia/index.html", context={
         "entries": entries,
+        "SearchP": search
     })
 
 
