@@ -9,3 +9,12 @@ class NewArticleForm(forms.Form):
     content = forms.CharField(label="Markdown content",required= False,
     widget= forms.Textarea
     (attrs={'placeholder':'Enter markdown content','style':'top:2rem'}))
+
+class EditArticleForm(forms.Form):
+    title = forms.CharField(label="Title",
+    required = True,
+    widget= forms.TextInput(attrs={'placeholder':'Enter Title','enabled':'false','style':'bottom:1rem'}))
+
+    content = forms.CharField(label="Markdown content",required= False,
+    widget= forms.Textarea
+    (attrs={'placeholder':'Enter markdown content','style':'top:2rem'}))

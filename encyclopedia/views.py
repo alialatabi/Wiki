@@ -6,7 +6,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 import markdown2
 from django.contrib import messages
-from encyclopedia.forms import NewArticleForm
+from encyclopedia.forms import EditArticleForm, NewArticleForm
 from . import util
 from encyclopedia.forms import NewArticleForm
 
@@ -53,7 +53,7 @@ def add_arti(request):
         return render(request,"encyclopedia/Add_arti.html",context={
             'add':NewArticleForm(),
         })
-        
+
     if request.method == "POST":
         arti = NewArticleForm(request.POST)
         if arti.is_valid():
@@ -65,7 +65,23 @@ def add_arti(request):
                     })
             else:
                 util.save_entry(title,content)
-                return HttpResponseRedirect(reverse("index"))
+                return redirect(index)
+
+def edit(request,title:str):
+    entries = util.list_entries()
+    if request.method == "GET":
+        title = request.GET.get("")
+        return render(request,"encyclopedia/edit.html",context={
+            'edit':EditArticleForm(),
+        })
+
+    if request.method == "POST":
+        arti = EditArticleForm(request.POST)
+        if arti.is_valid():
+            title = arti.cleaned_data["title"]
+            content = arti.cleaned_data["content"]
+            util.save_entry(title,content)
+            return HttpResponseRedirect(reverse("index"))
 
 
 def random_arti(request):
@@ -73,7 +89,5 @@ def random_arti(request):
     ra = random.choice(entries)
     random_article = markdown2.markdown(util.get_entry(ra))
 
-    return render(request,"encyclopedia/random.html",context={
-        "random_article": random_article
-    })
+    return redirect(Show_Entry,title=ra)
 
