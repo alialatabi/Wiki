@@ -6,7 +6,7 @@
 
 {% block body %}
 
-<form action="{% url 'edit' %}" method="POST"  >
+<form action="{% url 'edit' title %}" method="POST"  >
     {% csrf_token %}
         {{edit}}
 

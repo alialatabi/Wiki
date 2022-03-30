@@ -16,7 +16,7 @@ from encyclopedia.forms import NewArticleForm
 def index(request):
     entries = util.list_entries()
     q = request.GET.get('q')
-    search = False;
+    search = False
     t_list=[]
     if q:
         search = True
@@ -41,6 +41,7 @@ def Show_Entry(request,title):
     if title in entries:
         article = markdown2.markdown(util.get_entry(title))
         return render(request,"encyclopedia/Show_Entry.html",context={
+                "title":title,
                 "article": article
             })
     else:
@@ -70,15 +71,15 @@ def add_arti(request):
 def edit(request,title:str):
     entries = util.list_entries()
     if request.method == "GET":
-        title = request.GET.get("")
+        article = util.get_entry(title)
         return render(request,"encyclopedia/edit.html",context={
-            'edit':EditArticleForm(),
+            'edit':EditArticleForm(initial={'content': article}),
+            'title': title,
         })
 
     if request.method == "POST":
         arti = EditArticleForm(request.POST)
         if arti.is_valid():
-            title = arti.cleaned_data["title"]
             content = arti.cleaned_data["content"]
             util.save_entry(title,content)
             return HttpResponseRedirect(reverse("index"))
